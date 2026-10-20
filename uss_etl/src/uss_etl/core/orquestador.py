@@ -16,7 +16,7 @@ from uss_etl.core.contratos import ModuloDefinicion
 from uss_etl.core.extraccion import extraer
 from uss_etl.core.homologacion import cargar_catalogos, homologar
 from uss_etl.core.layout import LayoutBanner, cargar_layout
-from uss_etl.core.salida import exportar_planilla, guardar_anomalias
+from uss_etl.core.salida import exportar_planilla, guardar_anomalias, registrar_corrida
 from uss_etl.core.settings import Settings
 from uss_etl.core.validacion import validar
 from uss_etl.modules import obtener_modulo
@@ -62,17 +62,24 @@ async def ejecutar(nombre_modulo: str, settings: Settings, csv_path: Path | None
         cargar_catalogos(mod, settings),
     )
 
-    df = homologar(legacy, catalogos, mod.catalogos)
+    df, huerfanos = homologar(legacy, catalogos, mod.catalogos)
     for campo, valor in constantes.items():
         df[campo] = valor
     df = mod.preparar(df)
 
     res = validar(df, mod.modelo, mod.nombre)
 
+    # Conciliación: toda fila leída debe terminar en la planilla o en la DLQ. Nada se pierde en silencio.
+    if len(legacy) != len(res.validos) + len(res.anomalias):
+        raise RuntimeError(
+            f"[{mod.nombre}] descuadre: leídos={len(legacy)} != válidos={len(res.validos)} + rechazados={len(res.anomalias)}"
+        )
+
     planilla = settings.output_dir / mod.archivo_salida
     await exportar_planilla(res.validos, planilla, columnas, mod.delimitador, mod.col_secuencia, layout)
     n_dlq = await guardar_anomalias(settings.dlq_path, res.anomalias, corrida)
 
+    await registrar_corrida(settings.dlq_path, corrida, mod.nombre, len(legacy), len(res.validos), n_dlq, planilla, huerfanos)
     resumen = Resumen(mod.nombre, len(legacy), len(res.validos), n_dlq, planilla)
     log.info("%s", resumen)
     return resumen

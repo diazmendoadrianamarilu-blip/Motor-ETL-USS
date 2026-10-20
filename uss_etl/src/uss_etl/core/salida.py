@@ -1,5 +1,6 @@
 """Escritura de la planilla Banner y de la Dead Letter Queue (SQLite)."""
 import asyncio
+import hashlib
 import sqlite3
 from pathlib import Path
 
@@ -59,3 +60,43 @@ def _guardar_dlq(path: Path, df: pd.DataFrame, corrida: str) -> int:
 
 async def guardar_anomalias(path: Path, df: pd.DataFrame, corrida: str) -> int:
     return await asyncio.to_thread(_guardar_dlq, path, df, corrida) if not df.empty else 0
+
+
+_DDL_CORRIDAS = """
+CREATE TABLE IF NOT EXISTS corridas (
+    corrida TEXT NOT NULL, modulo TEXT NOT NULL,
+    leidos INTEGER NOT NULL, validos INTEGER NOT NULL, rechazados INTEGER NOT NULL,
+    planilla TEXT NOT NULL, sha256 TEXT NOT NULL,
+    creado_en TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (corrida, modulo)
+);
+CREATE TABLE IF NOT EXISTS huerfanos (
+    corrida TEXT NOT NULL, modulo TEXT NOT NULL,
+    catalogo TEXT NOT NULL, valor TEXT NOT NULL, filas INTEGER NOT NULL
+);"""
+
+
+def sha256_archivo(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for bloque in iter(lambda: f.read(1 << 20), b""):
+            h.update(bloque)
+    return h.hexdigest()
+
+
+def _guardar_corrida(path, corrida, modulo, leidos, validos, rechazados, planilla, huerfanos) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with sqlite3.connect(path) as con:
+        con.executescript(_DDL_CORRIDAS)
+        con.execute(
+            "INSERT INTO corridas (corrida, modulo, leidos, validos, rechazados, planilla, sha256) VALUES (?,?,?,?,?,?,?)",
+            (corrida, modulo, leidos, validos, rechazados, str(planilla), sha256_archivo(planilla)),
+        )
+        con.executemany(
+            "INSERT INTO huerfanos (corrida, modulo, catalogo, valor, filas) VALUES (?,?,?,?,?)",
+            [(corrida, modulo, r.catalogo, r.valor, r.filas) for r in huerfanos.itertuples()],
+        )
+
+
+async def registrar_corrida(*args) -> None:
+    await asyncio.to_thread(_guardar_corrida, *args)

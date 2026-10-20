@@ -58,8 +58,13 @@ def _tabla_equivalencias(m: CatalogoMapping, cat: pd.DataFrame) -> pd.DataFrame:
     return t
 
 
-def homologar(legacy: pd.DataFrame, catalogos: dict[str, pd.DataFrame], mappings: tuple[CatalogoMapping, ...]) -> pd.DataFrame:
-    """LEFT JOIN legacy -> cada catálogo. Agrega `sin_equivalencia` con los valores huérfanos.
+def homologar(
+    legacy: pd.DataFrame, catalogos: dict[str, pd.DataFrame], mappings: tuple[CatalogoMapping, ...]
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """LEFT JOIN legacy -> cada catálogo. Devuelve (df, huérfanos).
+
+    `df` lleva la columna `sin_equivalencia`; `huérfanos` resume (catalogo, valor, filas)
+    para que los funcionales sepan exactamente qué agregar a su catálogo.
 
     Un valor legacy NO vacío sin match deja el destino en NA y queda anotado en
     `sin_equivalencia`; Pydantic lo rechaza después. Un valor legacy vacío no es
@@ -67,6 +72,7 @@ def homologar(legacy: pd.DataFrame, catalogos: dict[str, pd.DataFrame], mappings
     """
     out = legacy.copy()
     out["sin_equivalencia"] = ""
+    resumen_huerfanos = []
     for m in mappings:
         tabla = _tabla_equivalencias(m, catalogos[m.nombre])
         out[_K] = normalizar_clave(out[m.campo_legacy])
@@ -75,8 +81,10 @@ def homologar(legacy: pd.DataFrame, catalogos: dict[str, pd.DataFrame], mappings
         primario = next(iter(m.destinos.values()))
         huerfano = out[_K].notna() & out[primario].isna()
         detalle = "[" + m.nombre + "] '" + out[m.campo_legacy].astype("string") + "'"
+        cuentas = out.loc[huerfano, m.campo_legacy].value_counts()
+        resumen_huerfanos += [(m.nombre, str(v), int(n)) for v, n in cuentas.items()]
         previo = out["sin_equivalencia"]
         out["sin_equivalencia"] = previo.where(~huerfano, previo + detalle.where(huerfano, "") + " ")
         out = out.drop(columns=_K)
     out["sin_equivalencia"] = out["sin_equivalencia"].str.strip().replace("", pd.NA)
-    return out
+    return out, pd.DataFrame(resumen_huerfanos, columns=["catalogo", "valor", "filas"])
