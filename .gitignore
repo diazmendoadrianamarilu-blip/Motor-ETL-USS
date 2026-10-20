@@ -32,3 +32,6 @@ dist/
 .vscode/
 .idea/
 .DS_Store
+
+# Excepción: layout oficial de Ellucian (insumo versionado)
+!uss_etl/layouts/*.csv

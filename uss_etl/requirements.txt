@@ -1,5 +1,6 @@
 pandas>=2.2
 pydantic>=2.7
 SQLAlchemy>=2.0
-pyodbc>=5.0        # driver SQL Server (solo producción)
-openpyxl>=3.1      # lectura/escritura Excel
+python-dotenv>=1.0
+pyodbc>=5.0        # driver SQL Server (solo modo sql)
+openpyxl>=3.1      # lectura de catalogos Excel

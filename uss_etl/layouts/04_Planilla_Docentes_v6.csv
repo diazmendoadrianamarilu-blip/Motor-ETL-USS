@@ -1,0 +1,44 @@
+﻿;;;SIBINST;;;;;;;;;;;;SIRICNT;;;SIRDPCL;;;;SIRATTR;;;;SORPCOL;;;;SORDEGR;;;;;;;;;;SORMAJR;SORMINR;SORCONC;CODIGO MEP
+Banner Column Name;SZTINST_ROW_NUMBER;SZTINST_ID_LEGADO;SZTINST_INST_TERM_CODE_EFF;SZTINST_INST_FCST_CODE;SZTINST_INST_FCST_DATE;SZTINST_INST_SCHD_IND;SZTINST_INST_ADVR_IND;SZTINST_INST_APPOINT_DATE;SZTINST_INST_OVER_PROC_IND;SZTINST_INST_OVER_PROC_USR;SZTINST_INST_OVER_PROC_DTE;SZTINST_INST_FCTG_CODE;SZTINST_INST_FSTP_CODE;SZTINST_INST_WKLD_CODE;SZTINST_ICNT_FCNT_CODE;SZTINST_ICNT_CNTR_CODE;SZTINST_ICNT_DEF_IND;SZTINST_DPCL_HOME_IND;SZTINST_DPCL_COLL_CODE;SZTINST_DPCL_DEPT_CODE;SZTINST_DPCL_PERCENTAGE;SZTINST_ATTR_FATT_CODE_1;SZTINST_ATTR_FATT_CODE_2;SZTINST_ATTR_FATT_CODE_3;SZTINST_ATTR_FATT_CODE_4;SZTINST_PCOL_SBGI_CODE;SZTINST_PCOL_TRANS_RECV_DATE;SZTINST_PCOL_TRANS_REV_DATE;SZTINST_PCOL_OFFICIAL_TRANS;SZTINST_DEGR_DEGC_CODE;SZTINST_DEGR_DEGC_DATE;SZTINST_DEGR_ATTEND_FROM;SZTINST_DEGR_ATTEND_TO;SZTINST_DEGR_DEGC_YEAR;SZTINST_DEGR_HOURS_TRANSF;SZTINST_DEGR_COLL_CODE;SZTINST_DEGR_HONR_CODE;SZTINST_DEGR_GPA_TRANSF;SZTINST_DEGR_NOM_GRADO;SZTINST_MAJR_CODE_MAJOR;SZTINST_MAJR_CODE_MINOR;SZTINST_MAJR_CODE_CONC;SZTINST_VPDI_CODE
+;ROW NUMBER;ID LEGADO;CODIGO DE PERIODO A PARTIR DE QUE EL PROFESOR SE ENCUENTRA VIGENTE;CODIGO DEL ESTATUS DEL DOCENTE;FECHA EN LA QUE SE ASIGNO EL ESTATUS DEL DOCENTE;INDICADOR DE DOCENTE;INDICADOR DE ASESOR;FECHA EN QUE SE OBTUVO EL NOMBRAMIENTO COMO DOCENTE;INDICADOR DE SOBREPASO DE REGLA DE SEGURIDAD;USUARIO QUE REALIZO EL SOBREPASO ;FECHA EN QUE SE INGRESO EL SOBREPASO;CODIGO DE CATEGORIA DEL DOCENTE;CODIGO DE TIPO DE PERSONAL;CODIGO DE LA REGLA DE TRABAJO;CODIGO DEL TIPO DE CONTRATO ASOCIADO AL DOCENTE ;CODIGO DE LA REGLA DEL CONTRATO ASOCIADA AL DOCENTE;INDICADOR DE PREDETERMINADO, MUESTRA CUAL DE LOS TIPOS DE CONTRATO SE DEFINE COMO EL PREDETERMINADO ;INDICADOR DE ESCUELA Y DEPARTAMENTO ADMINISTRATIVO SEDE;CODIGO DE ESCUELA DEL DOCENTE;CODIGO DEL DEPARTAMENTO DEL DOCENTE;PORCENTAJE DE RESPOSABILIDAD DEL DOCENTE PARA EL DEPARTAMENTO Y ESCUELA ;CODIGO DE LOS ATRIBUTOS QUE EL PROFESOR TIENE;CODIGO DE LOS ATRIBUTOS QUE EL PROFESOR TIENE;CODIGO DE LOS ATRIBUTOS QUE EL PROFESOR TIENE;CODIGO DE LOS ATRIBUTOS QUE EL PROFESOR TIENE;CODIGO DE LA ESCUELA DE PROCEDENCIA;FECHA DE RECEPCION DE LA HISTORIA ACADEMICA;FECHA DE REVISION DEL DOCUMENTO;INDICA SI EL DOCUMENTO ES OFICIAL;CODIGO DE GRADO DEL PROFESOR;FECHA DE OBTENCION DEL GRADO DEL PROFESOR;FECHA DE ASISTENCIA (DESDE);FECHA DE ASISTENCIA (HASTA);AÑO EN QUE SE OBTUVO EL GRADO;HORAS TRANSFERIDAS;CODIGO DE LA ESCUELA DONDE SE OBTUVO EL GRADO;HONORES;PROMEDIO TRANSFERIDO;NOMBRE COMPLETO GRADO;CARRERA ASOCIADA AL DOCENTE;ESPECIALIDAD ASOCIADA A LA CARRERA DEL DOCENTE;CONCENTRACION ASOCIADA A LA CARRERA DEL DOCENTE;CODIGO DE LA INSTITUCION AL QUE PERTENECE EL REGISTRO
+Tipo de Dato;TEXTO;TEXTO;TEXTO;TEXTO;FECHA;TEXTO;TEXTO;FECHA;TEXTO;TEXTO;FECHA;TEXTO;TEXTO;TEXTO;TEXTO;TEXTO;TEXTO;TEXTO;TEXTO;TEXTO;NUMERO;TEXTO;TEXTO;TEXTO;TEXTO;TEXTO;FECHA;FECHA;TEXTO;TEXTO;FECHA;FECHA;FECHA;TEXTO;NUMERO;TEXTO;TEXTO;NUMERO;TEXTO;TEXTO;TEXTO;TEXTO;TEXTO
+Longitud Máxima en Cada Columna;15;15;6;2;8;1;1;8;1;30;8;6;4;6;2;6;1;1;2;4;3;4;4;4;4;6;8;8;1;6;8;8;8;4;11;2;6;23;300;4;4;4;6
+"Obligatorio (Y).
+No obligatorio (N).";Y;Y;Y;Y;Y;N;N;N;N;N;N;N;N;N;Y;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N;N
+Comentario que describe cada columna;Secuencia de registros migrados. Este es un numero consecutivo del total de registros a Migrar ;Campo que contiene el ID del sistema legado. ;Periodo vigente del docente;Estatus del docente, puede ser Activo, Inactivo;"Fecha en que se Asigno como Docente.
+
+El Formato de las Fechas debera ser DDMMAAAA (Formato Texto)";"Este indicador Definine a la Persona como Docente 
+
+LOS VALORES VALIDOS SON:
+Y = ES DOCENTE,
+De lo contrario, dejar vacío";"Este indicador Definine a la Persona como Asesor
+
+LOS VALORES VALIDOS SON:
+Y = ES ASESOR,
+De lo contrario, colocar N";;"Permite a los clientes omitir la seguridad de la regla de proceso en SOAFACS
+Asignar siempre ""N"".";"ID del último usuario que actualizó el indicador de regla de seguridad en proceso SOAFACS.
+
+SI SE INGRESA LA COLUMNA J CON EL VALOR Y DEBE INGRESARSE ESTA COLUMNA
+Dejar vacía";"Fecha de Actividad del la ultima actualización de la regla de seguridad en proceso SOAFACS.
+
+SI SE INGRESA LA COLUMNA J CON EL VALOR Y DEBE INGRESARSE ESTA COLUMNADejar vacía";Categoría Asignada el Docente ;Tipo de personal del docente, este es requerido para el calculo de la carga de trabajo. ;Regla de carga asignada al docente;Asignar valores según tabla de referencia.; ;"LOS VALORES VALIDOS SON:
+
+D = Predefinido
+N = No es Predefinido";"Si se conoce el valor de los campos ""CODIGO DE ESCUELA DEL DOCENTE"" o  ""CODIGO DEL DEPARTAMENTO DEL DOCENTE"", asignar ""Y"", de lo contrario, dejar vacío.";ESCUELA ES LA FACULTAD DONDE ESTA EL DOCENTE;DEPARTAMENTO DE LA FACULTADO DONDE ESTÁ CONTRATADO EL DOCENTE;Si se conoce la información, asignar números enteros, de lo contrario, dejar vacía.;Corresponde a los atributos que el docente puede tener ;Corresponde a los atributos que el docente puede tener ;Corresponde a los atributos que el docente puede tener ;Corresponde a los atributos que el docente puede tener ;CORRESPONDE A LA ESCUELA DONDE REALIZO  SUS ESTUDIOS EL DOCENTE;"Fecha en que se recibió la Historia Académica del Docente por la institución.
+
+El Formato de las Fechas debera ser DDMMAAAA (Formato Texto)";Fecha en que se reviso la Historia Académica del Docente por la institución;"Indica si el documento presentado está certificado o es válido (oficial).
+LOS VALORES VALIDOS SON:
+Y = OFICIAL,
+De lo contrario, dejar vacío";Indica el grado obtenido por el Docente;"Fecha en que obtuvo el grado el docente.
+
+El Formato de las Fechas debera ser DDMMAAAA (Formato Texto)";"Asistencia desde: fecha inicial en que el docente asistió en la institución donde obtuvo el grado.
+
+El Formato de las Fechas debera ser DDMMAAAA (Formato Texto)";"Asistencia hasta: fecha final en que el docente asistió en la institución donde obtuvo el grado.
+
+El Formato de las Fechas debera ser DDMMAAAA (Formato Texto)";Año en que se obtuvo el grado ;Total de horas transferidas desde la universidad anterior. Este campo es informativo y no actualiza el GPA de transferencia en Historia Académica.;Colegio donde estudió el grado el profesor;Código de Honor obtenido por el docente en su estudio previo.;Esto es informativo y no actualiza el GPA de transferencia en Historia Académica;Nombre completo del Grado;"El código de carrera asociado el docente, se debe validar contra STVMAJR.
+";"El código especialidad de carrera asociado el docente, se debe validar contra STVMAJR
+";"El código concentración de carrera asociado el docente, se debe validar contra STVMAJR
+";Este campo sera llenado solo Si la intitucion a Migrar USARA MEP
+NOTA ;;;;;;;;;;;;;;;"SI SE INGRESA LA INFORMACION DE ESTA TABLA LA COLUMNA ""P"" ES OBLIGATORIA Y LA COLUMNA ""R"" DEBERA INGRESARSE COMO PREFEFINIDA";;;"SI SE INGRESA LA INFORMACION DE ESTA TABLA, DEBE INGRESAR LA COLUMNA ""S"" o ""T"" o AMBAS.";;;;;;;;"SI SE INGRESA INFORMACION PARA ESTA TABLA EL UNICO CAMPO QUE SE VUELVE OBLIGATORIO ES LA COLUMNA ""AA"", EL RESTO PUEDEN SER NULOS";;;;"PARA INGRESAR INFORMACION EN ESTA TABLA ES NECESARIO INGRESAR LA INFORMACION DE LA ESCUELA ANTERIOR DEL DOCENTE COLUMNA ""AA"" Y EL UNICO CAMPO OBLIGATORIO ES EL DEFINIDO EN LA COLUMNA ""AE""";;;;;;;;;;"SI SE DESEA INGRESAR ALGUNO DE ESTOS CAMPOS , DEBE INGRESAR EL CODIGO DE GRADO CORRESPONDIENTE A LA COLUMNA ""AE""";;;
+"Tabla de Validación
+";;;STVTERM;STVFCST;;;;;;;;STVFCTG;STVFSTP;STVWKLD;STVFCNT;STVCNTR;;;STVCOLL;STVDEPT;;STVFATT;;;;STVSBGI;;;;STVDEGC;;;;;;STVCOLL;STVHONR;;;STVMAJR;STVMAJR;STVMAJR;
