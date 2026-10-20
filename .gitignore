@@ -1,0 +1,34 @@
+# --- Bases de datos locales (DLQ) ---
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# --- Salidas / planillas generadas ---
+output/
+*.csv
+
+# --- Entorno y secretos ---
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+
+# --- Caché y artefactos de Python ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# --- IDE / SO ---
+.vscode/
+.idea/
+.DS_Store
